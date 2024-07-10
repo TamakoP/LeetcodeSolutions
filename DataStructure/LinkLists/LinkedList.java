@@ -50,8 +50,8 @@ public class LinkedList<E> {
    /**
     * @date 2024/7/9 下午3:29
     * @description 在指定位置插入元素
-    * @param index
-    * @param e
+    * @Param index
+    * @Param e
     * @return void
     */
     public void add(int index,E e){
@@ -74,7 +74,7 @@ public class LinkedList<E> {
     /**
      * @date 2024/7/9 下午3:45
      * @Description 添加首元素
-     * @param e
+     * @Param e
      * @return void
      */
     public void addFirst(E e){
@@ -84,7 +84,7 @@ public class LinkedList<E> {
     /**
      * @date 2024/7/9 下午3:47
      * @Description 添加末尾元素
-     * @param e
+     * @Param e
      * @return void
      */
 
@@ -95,7 +95,7 @@ public class LinkedList<E> {
     /**
      * @date 2024/7/9 下午3:53
      * @Description 获取指定索引的值
-     * @param index
+     * @Param index
      * @return E
      */
     public E get(int index){
@@ -114,7 +114,7 @@ public class LinkedList<E> {
     /**
      * @date 2024/7/9 下午3:54
      * @Description 获取链表首部的元素
-     * @param
+     * @Param
      * @return E
      */
     public E getFirst(){
@@ -134,7 +134,7 @@ public class LinkedList<E> {
     /**
      * @date 2024/7/9 下午4:04
      * @Description 修改指定位置的元素
-     * @param index e
+     * @Param index e
      * @return void
      */
 
@@ -155,7 +155,7 @@ public class LinkedList<E> {
     /**
      * @date 2024/7/9 下午4:15
      * @Description 判断元素是否在链表里
-     * @param e
+     * @Param e
      * @return boolean
      */
     public boolean contains(E e){
@@ -173,7 +173,7 @@ public class LinkedList<E> {
     /**
      * @date 2024/7/9 下午4:25
      * @Description 删除指定位置元素，以找到的第一个为准
-     * @param index
+     * @Param index
      * @return E
      */
     public E remove(int index){
@@ -196,7 +196,7 @@ public class LinkedList<E> {
     /**
      * @date 2024/7/9 下午4:40
      * @Description 删除指定元素，以第一次出现为准
-     * @param e
+     * @Param e
      * @return void
      */
     public void remove(E e){
@@ -220,7 +220,7 @@ public class LinkedList<E> {
     /**
      * @date 2024/7/9 下午4:41
      * @Description 删除所有元素e
-     * @param e
+     * @Param e
      * @return void
      */
     public void removeAll(E e){
@@ -242,7 +242,7 @@ public class LinkedList<E> {
      /**
       * @date 2024/7/9 下午4:52
       * @Description 删除链表首部
-      * @param
+      * @Param
       * @return E
       */
     public E removeFirst(){
@@ -252,7 +252,7 @@ public class LinkedList<E> {
     /**
      * @date 2024/7/9 下午4:54
      * @Description 删除链表尾部
-     * @param
+     * @Param
      * @return E
      */
     public E removeLast(){
