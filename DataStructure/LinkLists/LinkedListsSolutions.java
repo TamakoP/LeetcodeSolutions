@@ -1,7 +1,7 @@
 package LinkLists;
 
 
-import java.util.List;
+import java.util.Stack;
 
 /**
  * @Author: Tamako
@@ -74,5 +74,60 @@ public class LinkedListsSolutions {
             return head;
         }
 
+    }
+    /**
+     * @Description 交换链表中的相邻节点
+     * @Param [head]
+     * @return LinkLists.ListNode
+     */
+    public ListNode swapPairNodes(ListNode head){
+        //创建虚拟节点node
+        ListNode node = new ListNode(-1);
+        node.next = head;
+        ListNode pre = node;
+        while (pre.next != null && pre.next.next != null) {
+            ListNode l1 = pre.next, l2 = pre.next.next;
+            ListNode next = l2.next;
+            l1.next = next;
+            l2.next = l1;
+            pre.next = l2;
+            pre = l1;
+        }
+        return node.next;
+    }
+    /**
+     * @Description 链表求和：从后往前一一匹配相加（使用栈先进后出），新链表采用头插法
+     * @Param [hA, hB]
+     * @return LinkLists.ListNode
+     */
+    public ListNode addTwoLinks(ListNode hA,ListNode hB){
+        Stack<Integer> sa=buildStack(hA),sb=buildStack(hB);
+        //创建虚拟头节点
+        LinkedList ll=new LinkedList<>();
+        while(!sa.empty()&&!sb.empty()){
+           ll.addFirst((sa.pop()+ sb.pop())%10);
+
+        }
+        if(sa.empty()){
+            while(!sb.empty()){
+                ll.addFirst(sb.pop());
+
+            }
+        }
+        if(sb.empty()){
+            while(!sa.empty()){
+                ll.addFirst(sa.pop());
+            }
+        }
+        return ll.getHead();
+
+    }
+    private Stack<Integer> buildStack(ListNode<Integer> head){
+        Stack<Integer> stack=new Stack<>();
+        while(head!=null){
+            stack.push(head.e);
+            head=head.next;
+        }
+        return stack;
     }
 }

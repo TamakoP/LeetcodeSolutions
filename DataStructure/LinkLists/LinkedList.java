@@ -40,6 +40,10 @@ public class LinkedList<E> {
         size=0;
     }
 
+    public ListNode getHead(){
+        return this.dummyHead.next;
+    }
+
     public int getSize(){
         return size;
     }
@@ -257,6 +261,20 @@ public class LinkedList<E> {
      */
     public E removeLast(){
         return remove(size-1);
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder result = new StringBuilder();
+        result.append(String.format("LinkedList: size: %d\n",size));
+        result.append("head ");
+        ListNode cur = dummyHead.next;
+        while (cur != null){
+            result.append(cur+ "->");
+            cur = cur.next;
+        }
+        result.append("NULL");
+        return result.toString();
     }
 
 
