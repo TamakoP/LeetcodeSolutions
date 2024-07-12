@@ -130,4 +130,30 @@ public class LinkedListsSolutions {
         }
         return stack;
     }
+    /**
+     * @Description 回文链表判断：使用反转链表的方式，若是回文，反转之后仍不变
+     * @Param [head]
+     * @return boolean
+     */
+    public boolean isPalindrome(ListNode<Integer> head) {
+
+        if(head==null||head.next==null)
+            return true;
+        ListNode newHead=head;
+        ListNode reHead=reversedLinkedList(head);
+        //System.out.println(head.next.e);
+        while(newHead!=null){
+            if(reHead.e.equals(newHead.e)){
+                newHead=newHead.next;
+                reHead=reHead.next;
+                System.out.println(newHead.toString());
+                System.out.println(reHead.toString());
+            }
+            else{
+                return false;
+            }
+
+        }
+        return  true;
+    }
 }

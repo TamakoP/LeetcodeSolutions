@@ -17,18 +17,15 @@ public class LinkedListTest {
         l1.addLast(2);
         l1.addLast(4);
         l1.addLast(3);
-        l2.addLast(5);
-        l2.addLast(6);
-        l2.addLast(4);
-
-
-
-
-        node=solutions.addTwoLinks(l1.getHead(),l2.getHead());
-        while(node!=null){
-            System.out.println(node.e);
-            node=node.next;
-        }
+        l1.addLast(7);
+        /*ListNode node1=solutions.reversedLinkedList(l1.getHead());
+        while(node1!=null){
+            System.out.println(node1.e);
+            node1=node1.next;
+        }*/
+        ListNode head=l1.getHead();
+        //System.out.println(head.toString());
+       solutions.isPalindrome(head);
 
 
     }
