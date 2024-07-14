@@ -139,7 +139,14 @@ public class LinkedListsSolutions {
 
         if(head==null||head.next==null)
             return true;
-        ListNode newHead=head;
+        ListNode newHead=head,root=head;
+        while(newHead!=null){
+            newHead.next=head.next;
+            newHead=newHead.next;
+            head=head.next;
+        }
+        head=root;
+        newHead=root;
         ListNode reHead=reversedLinkedList(head);
         //System.out.println(head.next.e);
         while(newHead!=null){
@@ -156,4 +163,71 @@ public class LinkedListsSolutions {
         }
         return  true;
     }
+
+    /**
+     * @Description 分割链表：The input has been split into consecutive parts with size difference at most 1
+     * @Param [root, k]
+     * @return LinkLists.ListNode[]
+     */
+   public ListNode[] splitListToParts(ListNode root, int k){
+        //先计算出该链表的长度
+        int size=0;
+        ListNode head=root;
+        while(head!=null){
+            size++;
+            head=head.next;
+        }
+        //计算根据k划分的组数
+        int part_num=size/k;
+        /*若无法整除，计算余量：
+        余1->第一组元素数目为k+1
+        余2->前两组元素数目为k+1
+        余3->前三组元素数目为k+1
+         */
+        int extra=size%k;
+        //ln存放每一组的首节点
+        ListNode[] ln=new ListNode[k];
+        head=root;
+        for(int i=0;head!=null&&i<k;i++){
+            ln[i]=head;
+            //curS表示当前组元素数目：part_num+1或者part_num，可以用extra控制
+            int curS=part_num;
+            if(extra-->0){
+                curS=curS+1;
+            }
+
+            //该循环找到每组的最后一个结点
+            for(int j=0;j<curS-1;j++){
+                head=head.next;
+            }
+            //next存放下一组的首结点
+            ListNode next=head.next;
+            head.next=null;
+            head=next;
+
+
+        }
+        return ln;
+    }
+    /**
+     * @Description 链表元素按奇偶聚集：给定一个自然数排列的链表，奇偶错列
+     * @Param [head]
+     * @return LinkLists.ListNode
+     */
+    public ListNode oddEvenList(ListNode head) {
+       if(head==null||head.next==null)
+           return head;
+       ListNode odd=head,even=head.next;
+       //evenHead指向第一个偶数结点
+       ListNode evenHead=even;
+       while(even!=null&&even.next!=null){
+           odd.next=odd.next.next;
+           odd=odd.next;
+           even.next=even.next.next;
+           even=even.next;
+       }
+       odd.next=evenHead;
+       return head;
+    }
+
 }
