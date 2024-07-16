@@ -67,3 +67,39 @@ class MyStack{
         return queue.peek();
     }
 }
+
+
+class MinStack{
+    //minS存放每一次入栈操作中比当前min还要小的元素，根据栈“先进后出”的原则，stack和minS进行pop操作后的值若为min，那么上一个min应在pop后minS的栈顶
+    private Stack<Integer> stack,minS;
+    private int min;
+    public MinStack(){
+        stack=new Stack<>();
+        minS=new Stack<>();
+        min=Integer.MAX_VALUE;
+        //这里的min不要使用0
+    }
+
+    public void push(int val){
+        stack.push(val);
+        if(min>val){
+            minS.push(val);
+        }
+
+    }
+
+    public void pop(){
+        if(stack.pop()==minS.peek()){
+            minS.pop();
+            min=minS.peek();
+        }
+
+    }
+    public int top(){
+        return stack.peek();
+    }
+
+    public int getMin(){
+        return minS.peek();
+    }
+}
