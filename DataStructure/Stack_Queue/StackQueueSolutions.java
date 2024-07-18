@@ -1,5 +1,6 @@
 package Stack_Queue;
 
+import java.util.Arrays;
 import java.util.Stack;
 
 /**
@@ -46,6 +47,7 @@ public class StackQueueSolutions {
         //stack存放对应元素的距离其最近并且大于其元素的下标
         Stack<Integer> stack=new Stack<>();
         int[] distance=new int[temperatures.length];
+        //这里做两层循环，控制当前数组元素不变，遍历stack
         for(int i=0;i<temperatures.length;i++){
             while(!stack.isEmpty()&&temperatures[i]>temperatures[stack.peek()]){
                   int j=stack.pop();
@@ -55,5 +57,49 @@ public class StackQueueSolutions {
             stack.push(i);
         }
         return distance;
+    }
+    /**
+     * @Description 循环数组中比当前元素大的下一个元素:优先以后面的元素为主（仍旧采用栈；循环用取余控制
+     * @Param [nums]
+     * @return int[]
+     */
+    /* Input: [1,2,1]
+       Output: [2,-1,2]
+    */
+    /*public int[] nextGreaterElements(int[] nums){
+        Stack<Integer> stack=new Stack<>();
+        int[] output=new int[nums.length];
+        Arrays.fill(output,-1);
+        //这里做两层循环，控制当前数组元素不变，遍历stack
+        for(int i=0;i<nums.length;i++){
+            int step=0;
+            while(!stack.isEmpty()&&nums[i]>nums[stack.peek()+step]){
+                int j=stack.pop();
+                output[j]=nums[j];
+            }
+            //数组首元素的stack值设置为0，压栈操作放在比较之后能确保比较时stack的栈顶是上一个元素的下标
+            stack.push(i);
+        }
+        return output;
+
+
+    }*/
+    public int[] nextGreaterElements(int[] nums){
+        int[] output=new int[nums.length];
+        Arrays.fill(output,-1);
+        int num=nums.length;
+        for(int i=0;i<nums.length;i++){
+            int step=0;
+            while(nums[i]>nums[(i+1+step)%num]){
+                step++;
+            }
+            //这里要确保步长不超过数组长度-1，否则无法维持-1
+            if(step<num-1){
+                output[i]=nums[(i+1+step)%num];
+            }
+
+            System.out.println(output[i]);
+        }
+        return output;
     }
 }
