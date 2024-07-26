@@ -10,11 +10,11 @@ import java.util.Arrays;
  */
 public class Test {
     public static void main(String [] args){
-        int[] nums={3,3};
+        int[] nums={1,4,2,2,59,2,3,5,60};
         int target=6;
         Solutions solutions=new Solutions();
-        int[] location=solutions.twoSum(nums,target);
-        System.out.println(Arrays.toString(location));
+        int longest=solutions.longestConsecutive(nums);
+        System.out.println(longest);
 
     }
 }

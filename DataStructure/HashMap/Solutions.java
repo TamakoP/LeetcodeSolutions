@@ -1,8 +1,6 @@
 package HashMap;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @Author: Tamako
@@ -35,4 +33,64 @@ public class Solutions {
         }
         return location;
     }
+
+    /* *
+     * @Description 判断是否有重复元素：HashSet只能存放不重复的元素
+     * @Param
+     * @return
+     */
+    public boolean containsDuplicate(int[] nums) {
+        Set<Integer> set = new HashSet<>();
+        for (int num : nums) {
+            set.add(num);
+        }
+        return set.size() < nums.length;
+    }
+
+
+    /**
+     * @Description 最长和谐序列
+     * @Param [nums]
+     * @return int
+     */
+    public int findLHS(int[] nums){
+        Map<Integer,Integer> map=new HashMap<>();
+        for(int num:nums){
+            map.put(num,map.getOrDefault(num,0)+1);
+        }
+        int longest=0;
+        for(int num:map.keySet()){
+            if(map.containsKey(num+1)){
+                int longer=map.get(num)+map.get(num+1);
+                longest=longest<longer?longer:longest;
+            }
+        }
+        return longest;
+
+    }
+    /**
+     * @Description 最长连续递增序列
+     * @Param [nums]
+     * @return int
+     */
+    public int longestConsecutive(int[] nums){
+        Map<Integer,Integer> map=new HashMap<>();
+        //使用哈希表可以将数组中的重复元素避开
+        for(int num: nums){
+            map.put(num,1);
+        }
+        int ls=0;
+        for(int num:map.keySet()){
+            if(!map.containsKey(num-1)){
+                int i=num,cs=1;
+                while(map.containsKey(++i))
+                    cs+=1;
+                ls=Math.max(ls,cs);
+            }
+
+        }
+        return ls;
+    }
+
+
 }
