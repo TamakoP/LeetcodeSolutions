@@ -13,7 +13,7 @@ public class StackQueueTest {
     public static void main(String[] args) {
         StackQueueSolutions solutions = new StackQueueSolutions();
         int[] nums = {1, 7, 3, 4, 9, 8};
-        nums=solutions.nextGreaterElements(nums);
+        nums=solutions.nextGreaterElements_Array(nums);
         System.out.println(Arrays.toString(nums));
     }
 }

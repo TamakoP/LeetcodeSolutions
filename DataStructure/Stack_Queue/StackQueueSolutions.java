@@ -66,25 +66,24 @@ public class StackQueueSolutions {
     /* Input: [1,2,1]
        Output: [2,-1,2]
     */
-    /*public int[] nextGreaterElements(int[] nums){
-        Stack<Integer> stack=new Stack<>();
-        int[] output=new int[nums.length];
-        Arrays.fill(output,-1);
-        //这里做两层循环，控制当前数组元素不变，遍历stack
-        for(int i=0;i<nums.length;i++){
-            int step=0;
-            while(!stack.isEmpty()&&nums[i]>nums[stack.peek()+step]){
-                int j=stack.pop();
-                output[j]=nums[j];
-            }
-            //数组首元素的stack值设置为0，压栈操作放在比较之后能确保比较时stack的栈顶是上一个元素的下标
-            stack.push(i);
+    public int[] nextGreaterElements_Stack(int[] nums) {
+    int n = nums.length;
+    int[] next = new int[n];
+    Arrays.fill(next, -1);
+    Stack<Integer> pre = new Stack<>();
+    //设置两倍的长度：因为最多循环一次就能找到比当前元素大的下一个元素
+    for (int i = 0; i < n * 2; i++) {
+        int num = nums[i % n];
+        while (!pre.isEmpty() && nums[pre.peek()] < num) {
+            next[pre.pop()] = num;
         }
-        return output;
-
-
-    }*/
-    public int[] nextGreaterElements(int[] nums){
+        if (i < n){
+            pre.push(i);
+        }
+    }
+    return next;
+}
+    public int[] nextGreaterElements_Array(int[] nums){
         int[] output=new int[nums.length];
         Arrays.fill(output,-1);
         int num=nums.length;
