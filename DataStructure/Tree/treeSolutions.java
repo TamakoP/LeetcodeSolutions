@@ -2,8 +2,7 @@ package Tree;
 
 import com.sun.source.tree.Tree;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @Author: Tamako
@@ -101,4 +100,65 @@ public class treeSolutions {
         return res;
 
     }
+
+    /**
+     * @Description 一棵树每层节点的平均数
+     * @Param [root]
+     * @return java.util.List<java.lang.Double>
+     */
+    public List<Double> averageOfLevels(TreeNode root) {
+        //牢记List只是一个抽象类，必须实例化用ArrayList
+        List<Double> res=new ArrayList<>();
+        if(root==null) return res;
+        Queue<TreeNode> qu=new LinkedList<TreeNode>();
+        qu.offer(root);
+
+        while(!qu.isEmpty()){
+            //进入for循环之前队列的长度对应同一层的节点个数
+            int size=qu.size();
+            double sum=0;
+            for(int i=0;i<size;i++){
+                //注意peek函数只是返回队首元素，poll返回队首元素并且将其从队列中删除
+                TreeNode tn=qu.poll();
+                sum+=tn.val;
+                if(tn.left!=null) qu.offer(tn.left);
+                if(tn.right!=null) qu.offer(tn.right);
+            }
+            res.add(sum/size);
+
+        }
+        return res;
+
+    }
+    // 非递归的前序遍历
+    public List<Integer> preorderTraversal(TreeNode root) {
+        List<Integer> res=new ArrayList<>();
+        Stack<TreeNode> stack=new Stack<>();
+        stack.push(root);
+        while(!stack.isEmpty()){
+            TreeNode tn=stack.pop();
+            res.add(tn.val);
+            //先压栈右节点，再压栈左节点
+            if(tn.right!=null) stack.push(tn.right);
+            if(tn.left!=null) stack.push(tn.left);
+
+        }
+        return res;
+    }
+
+    public List<Integer> postorderTraversal(TreeNode root) {
+        List<Integer> res=new ArrayList<>();
+        Stack<TreeNode> stack=new Stack<>();
+        stack.push(root);
+        while(!stack.isEmpty()){
+            TreeNode tn=stack.pop();
+            res.add(tn.val);
+            //先压栈右节点，再压栈左节点
+            if(tn.right!=null) stack.push(tn.right);
+            if(tn.left!=null) stack.push(tn.left);
+
+        }
+        return res;
+    }
+
 }
