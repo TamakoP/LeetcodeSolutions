@@ -145,7 +145,7 @@ public class treeSolutions {
         }
         return res;
     }
-
+    // 非递归的后序遍历   后序：左右根 （翻转结果 根右左） 修改前序的方法先把右节点压栈
     public List<Integer> postorderTraversal(TreeNode root) {
         List<Integer> res=new ArrayList<>();
         Stack<TreeNode> stack=new Stack<>();
@@ -154,11 +154,58 @@ public class treeSolutions {
             TreeNode tn=stack.pop();
             res.add(tn.val);
             //先压栈右节点，再压栈左节点
-            if(tn.right!=null) stack.push(tn.right);
-            if(tn.left!=null) stack.push(tn.left);
 
+            if(tn.left!=null) stack.push(tn.left);
+            if(tn.right!=null) stack.push(tn.right);
+        }
+        Collections.reverse(res);
+        return res;
+    }
+    // 非递归的中序遍历
+    public List<Integer> inorderTraversal(TreeNode root) {
+        List<Integer> res=new ArrayList<>();
+        if (root == null) return res;
+        Stack<TreeNode> stack=new Stack<>();
+        TreeNode tn=root;
+        while(tn!=null||!stack.isEmpty()){
+            while(tn!=null){
+                stack.push(tn);
+                tn=tn.left;
+            }
+            TreeNode node = stack.pop();
+            res.add(node.val);
+            tn = node.right;
         }
         return res;
     }
+    /**
+     * @Description 修剪二叉树：只保留值在 L ~ R 之间的节点
+     * @Param [root, L, R]
+     * @return Tree.TreeNode
+     */
+    public TreeNode trimBST(TreeNode root, int L, int R) {
+        if(root==null) return null;
+        if(root.val>R) trimBST(root.left,L,R);
+        if(root.val<L) trimBST(root.right,L,R);
+        root.left = trimBST(root.left, L, R);
+        root.right = trimBST(root.right, L, R);
+        return root;
+    }
+    /**
+     * @Description 寻找二叉查找树的第 k 个元素
+     * @Param [root, k]
+     * @return int
+     */
+    public int kthSmallest(TreeNode root, int k) {
+        //curCount表示比当前节点的值小的个数
+        int curCount=count(root.left);
+        if(k-1==curCount) return root.val;
+        if(k>curCount+1) return kthSmallest(root.right,k-curCount-1);
+        return kthSmallest(root.left,k);
 
+    }
+    private int count(TreeNode root){
+        if(root==null) return 0;
+        return count(root.left)+count(root.right)+1;
+    }
 }
