@@ -208,4 +208,22 @@ public class treeSolutions {
         if(root==null) return 0;
         return count(root.left)+count(root.right)+1;
     }
+    /**
+     * @Description 把二叉查找树每个节点的值都加上比它大的节点的值: 对于左节点，只需要加上其父节点的值；对于非叶子节点，加上其右支节点所有值
+     * @Param
+     * @return 
+     */
+    private int sum = 0;
+    public TreeNode convertBST(TreeNode root) {
+        traver(root);
+        return root;
+    }
+
+    private void traver(TreeNode node) {
+        if (node == null) return;
+        traver(node.right);
+        sum += node.val;
+        node.val = sum;
+        traver(node.left);
+    }
 }
