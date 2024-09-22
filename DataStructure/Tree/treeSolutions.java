@@ -226,4 +226,22 @@ public class treeSolutions {
         node.val = sum;
         traver(node.left);
     }
+    /**
+     * @Description 二叉查找树的最近公共祖先:两个节点刚好一左一右，返回root；都大于root，递归更新至root.right；都小于root,递归更新至root.left
+     * @Param [root, p, q]
+     * @return Tree.TreeNode
+     */
+    public TreeNode lowestCommonAncestorBST(TreeNode root, TreeNode p, TreeNode q) {
+        if (root.val > p.val && root.val > q.val) return lowestCommonAncestorBST(root.left, p, q);
+        if (root.val < p.val && root.val < q.val) return lowestCommonAncestorBST(root.right, p, q);
+        return root;
+    }
+
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        // 如果其中之一是root，祖先只能是root
+        if (root == null || root == p || root == q) return root;
+        TreeNode left = lowestCommonAncestor(root.left, p, q);
+        TreeNode right = lowestCommonAncestor(root.right, p, q);
+        return left == null ? right : right == null ? left : root;
+    }
 }
