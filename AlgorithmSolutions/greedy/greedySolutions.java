@@ -135,7 +135,66 @@ public class greedySolutions {
                 }
             }
             return profit;
+    }
+    public boolean canPlaceFlowers(int[] flowerbed, int n) {
+        int len = flowerbed.length;
+        int cnt = 0;
+        for (int i = 0; i < len && cnt < n; i++) {
+            if (flowerbed[i] == 1) {
+                continue;
+            }
+            //当前位置为空，考虑前一个位置是否为1
+            int pre = i == 0 ? 0 : flowerbed[i - 1];
+            int next = i == len - 1 ? 0 : flowerbed[i + 1];
+            if (pre == 0 && next == 0) {
+                cnt++;
+                flowerbed[i] = 1;
+            }
         }
+        return cnt >= n;
+    }
+
+    public boolean isSubsequence(String s, String t) {
+        int index=-1;
+        for(char c:s.toCharArray()){
+            //indexOf成功则返回下标，不成功返回-1;fromIndex若为负数等同于0
+            //这里形参fromIndex=index+1不能为index，因为indexOf默认从fromIndex开始寻找，若遇到s="abbc"的情况，第二个b在寻找时对应的是第一个b的下标
+            index=t.indexOf(c,index+1);
+            System.out.println(index);
+            if(index==-1)
+                return false;
+        }
+        return true;
+    }
+    //修改一个数成为非递减数组
+    public boolean checkPossibility(int[] nums) {
+        int modify=0;
+        for(int i=0;i<nums.length;i++){
+            //end加入if判断防止数组溢出或者令下标从1开始
+            /*for (int i = 1; i < nums.length && cnt < 2; i++) {
+                   if (nums[i] >= nums[i - 1])、
+             */
+            boolean end=i==nums.length-1?true:false;
+            if(!end&&nums[i]>nums[i+1])
+                modify++;
+        }
+        return modify>1?false:true;
+    }
+
+    public int maxSubArray(int[] nums) {
+        if (nums == null || nums.length == 0) {
+            return 0;
+        }
+        int preSum = nums[0];
+        int maxSum = preSum;
+        for (int i = 1; i < nums.length; i++) {
+            //决定是否把当前值加上：若preSum<0，则完全抛弃
+            preSum = preSum > 0 ? preSum + nums[i] : nums[i];
+            maxSum = Math.max(maxSum, preSum);
+        }
+        return maxSum;
+    }
+
 
 
     }
