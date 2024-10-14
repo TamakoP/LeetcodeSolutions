@@ -1,9 +1,6 @@
 package greedy;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 /**
  * @Author: Tamako
@@ -193,6 +190,36 @@ public class greedySolutions {
             maxSum = Math.max(maxSum, preSum);
         }
         return maxSum;
+    }
+   // S = "ababcbacadefegdehijhklij"
+    public List<Integer> partitionLabels(String s) {
+        List<Integer> rtn=new ArrayList<>();
+        char[] c=s.toCharArray();
+        //map存储每个字符在s中的最大下标
+        Map<Character,Integer> map=new HashMap<>();
+        for(int i=0;i<c.length;i++){
+            map.put(c[i],i);
+        }
+        int  maxIndex=map.get(c[0]);
+        int startIndex=0;
+        for(int i=1;i<c.length;i++){
+           if(maxIndex>i){
+               maxIndex=Math.max(maxIndex,map.get(c[i]));
+               continue;
+           }
+           //每一个subArray都会存在一个maxIndex，且maxIndex刚好等于subArray最后一个字母在s中的index
+           if(maxIndex==i){
+               rtn.add(i-startIndex+1);
+               //当遍历倒最后一个字母时，maxIndex和startIndex无需再更新
+               if(i==c.length-1){
+                   break;
+               }else{
+                   startIndex=i+1;
+                   maxIndex=map.get(c[i+1]);
+               }
+           }
+        }
+        return rtn;
     }
 
 
