@@ -25,4 +25,68 @@ public class bsSolutions {
         }
         return nums[l];
     }
-}
+
+    /*public int firstBadVersion(int n) {
+        int l = 1, h = n;
+        while (l < h) {
+            int mid = l + (h - l) / 2;
+            if (isBadVersion(mid)) {
+                h = mid;
+            } else {
+                l = mid + 1;
+            }
+        }
+        return l;
+    }*/
+/**
+ * @Description  旋转数组的最小数字
+ * @Param [nums]
+ * @return int
+ */
+    public int findMin(int[] nums) {
+        //若数组并未旋转，数组必定严格升序排列，最后一个元素必定>首元素
+        if(nums[0]<nums[nums.length-1]) return nums[0];
+        int l=0;
+        int h=nums.length-1;
+        while(l<h){
+            int mid=l+(h-l)/2;
+            if(nums[mid]>nums[h])
+                l=mid+1;
+            else{
+                h=mid-1;
+            }
+        }
+        return nums[l];
+
+    }
+    /**
+     * @Description Find First and Last Position of Element in Sorted Array
+     * @Param [nums, target]
+     * @return int[]
+     */
+    public int[] searchRange(int[] nums, int target) {
+        int l=0;
+        int h= nums.length-1;
+        while(l<h){
+            int mid=l+(h-l)/2;
+            if(nums[mid]<target)
+                l=mid+1;
+            else{
+                h=mid-1;
+            }
+        }
+        if(nums[l]!=target)
+            return new int[]{-1,-1};
+        if(nums[l-1]==target){
+            return new int[]{l-1,l};
+        }
+        else{
+            return new int[]{l,l+1};
+        }
+
+
+    }
+
+
+
+    }
