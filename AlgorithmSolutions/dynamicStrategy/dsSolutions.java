@@ -1,5 +1,7 @@
 package dynamicStrategy;
 
+import java.util.*;
+
 /**
  * @Author: Tamako
  * @Description: TODO
@@ -72,6 +74,7 @@ public class dsSolutions {
         return nums[n];
     }
     //动态规划：存储当前对应的前一个状态值
+    //使用数组存储状态值
     public int minPathSum(int[][] grid) {
         if (grid.length == 0 || grid[0].length == 0) {
             return 0;
@@ -110,4 +113,98 @@ public class dsSolutions {
         }
         return dp[m-1][n-1];
     }
+
+    public int numberOfArithmeticSlices(int[] nums) {
+        if(nums.length<3) return 0;
+        //dp记录以nums[i]结尾的等差数列的个数
+        int[] dp=new int[nums.length];
+        for(int i=2;i<=nums.length;i++){
+            if (nums[i-1]-nums[i-2]==nums[i]-nums[i-1])
+                // 若nums[i-1]-nums[i-2]==nums[i]-nums[i-1]成立，且nums[i+1]-nums[i]==nums[i]-nums[i-1]也成立
+                // nums[i-2] nums[i-1] nums[i] nums[i+1]也为等差数列
+                dp[i]=dp[i-1]+1;
+        }
+        int sum=0;
+        for(int cnt:dp)
+            sum+=cnt;
+        return sum;
+
+
+    }
+
+    public int integerBreak(int n) {
+        int[] dp=new int[n+1];
+        dp[2]=1;
+        for(int i=3;i<n+1;i++){
+            for(int j=1;j<i/2;j++){
+                dp[i]=Math.max(dp[i],Math.max((i-j)*j,dp[i-j]*j));
+            }
+
+        }
+        return dp[n];
+    }
+
+    public int numSquares(int n) {
+        int[] dp=new int[n+1];
+        dp[1]=1;
+        List<Integer> squareList=new ArrayList<>();
+        for(int i=1;i<n;i++){
+            squareList.add((int) Math.pow(i,2));
+        }
+        for(int i=2;i<=n;i++){
+            int min=Integer.MAX_VALUE;
+            for(int square:squareList){
+                if(square>i)
+                    break;
+                min=Math.min(dp[i-square]+1,min);
+            }
+            dp[i]=min;
+        }
+        return dp[n];
+
+    }
+
+    public int numDecodings(String s) {
+        if (s == null || s.length() == 0) {
+            return 0;
+        }
+        int n = s.length();
+        int[] dp = new int[n + 1];
+        dp[0] = 1;
+        dp[1] = s.charAt(0) == '0' ? 0 : 1;
+        for (int i = 2; i <= n; i++) {
+            int one = Integer.valueOf(s.substring(i - 1, i));
+            if (one != 0) {
+                dp[i] += dp[i - 1];
+            }
+            if (s.charAt(i - 2) == '0') {
+                continue;
+            }
+            int two = Integer.valueOf(s.substring(i - 2, i));
+            if (two <= 26) {
+                dp[i] += dp[i - 2];
+            }
+        }
+        return dp[n];
+    }
+
+
+    public int lengthOfLIS(int[] nums) {
+        if(nums.length==0) return 0;
+        //dp存储以nums[i]结束的最长递增子序列的长度
+        int[] dp=new int[nums.length+1];
+
+        for(int i=0;i<nums.length;i++){
+            int max=1;
+             for(int j=0;j<i;j++){
+                 if(nums[j]<nums[i])
+                     max=Math.max(max,dp[j]+1);
+
+             }
+             dp[i]=max;
+        }
+        return  Arrays.stream(dp).max().getAsInt();
+
+    }
+
 }
