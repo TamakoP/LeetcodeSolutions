@@ -193,7 +193,7 @@ public class dsSolutions {
         if(nums.length==0) return 0;
         //dp存储以nums[i]结束的最长递增子序列的长度
         int[] dp=new int[nums.length+1];
-
+        // 两层for循环，时间复杂度O(n*2)
         for(int i=0;i<nums.length;i++){
             int max=1;
              for(int j=0;j<i;j++){
@@ -205,6 +205,25 @@ public class dsSolutions {
         }
         return  Arrays.stream(dp).max().getAsInt();
 
+    }
+
+    public int wiggleMaxLength(int[] nums) {
+        if (nums == null || nums.length == 0) {
+            return 0;
+        }
+        //up代表上升，down代表下降，两者交替更新
+        //每一轮只会出现一种情况，up down的值其实是up down交替的次数
+        int up = 1, down = 1;
+        for (int i = 1; i < nums.length; i++) {
+            if (nums[i] > nums[i - 1]) {
+                //出现上升，更新为上一次down的值+1
+                up = down + 1;
+            } else if (nums[i] < nums[i - 1]) {
+                down = up + 1;
+            }
+
+        }
+        return Math.max(up, down);
     }
 
 }
