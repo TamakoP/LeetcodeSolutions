@@ -10,9 +10,9 @@ import java.util.Arrays;
  */
 public class bsTest {
     public static void main(String[] args){
-        int[] nums={5,7,7,8,8,10};
+        int[] nums={2,3,2};
         bsSolutions bss=new bsSolutions();
-        System.out.println(Arrays.toString(bss.searchRange(nums,6)));
+
     }
 
 }

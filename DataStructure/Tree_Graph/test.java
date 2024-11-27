@@ -1,5 +1,7 @@
 package Tree_Graph;
 
+import java.util.Arrays;
+
 /**
  * @Author: Tamako
  * @Description: TODO
@@ -8,9 +10,9 @@ package Tree_Graph;
  */
 public class test {
     public static void main (String[] args){
-        int[][] graph={{1,3},{0,2},{1,3},{0,2}};
+        int[][] graph={{0,0,0,1},{0,1,0,0},{1,0,0,1},{1,0,1,0}};
         Solution ss=new Solution();
-        System.out.println(ss.isBipartite(graph));
+        System.out.println(ss.shortestPathBinaryMatrix(graph));
 
     }
 }

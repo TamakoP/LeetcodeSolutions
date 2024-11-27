@@ -1,8 +1,6 @@
 package Tree_Graph;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
 /**
  * @Author: Tamako
@@ -10,6 +8,24 @@ import java.util.Stack;
  * @Date: 2024/8/20 下午2:33
  * @Version: 1.0
  */
+
+class Pair
+{
+    int first,second;
+    // Return an immutable singleton map containing only the specified
+    // key-value pair mapping
+    public Pair(int first, int second) {
+        this.first=first;
+        this.second=second;
+    }
+    public int get(int index){
+        if(index==0)
+            return first;
+
+        return second;
+    }
+}
+
 public class Solution {
     public boolean isBipartite(int[][] graph){
         int nodeNum=graph.length;
@@ -114,5 +130,48 @@ public class Solution {
         boolean connect(int u,int v){
             return find(u)==find(v);
         }
+    }
+
+    /**
+     * @Description 计算在网格中从原点到特定点的最短路径长度
+     * @Param [grid]
+     * @return int
+     */
+    public int shortestPathBinaryMatrix(int[][] grid) {
+        if (grid == null || grid.length == 0 || grid[0].length == 0||grid[0][0]==1) {
+            return -1;
+        }
+        Queue<Pair> queue = new LinkedList<>();
+        Set<Pair> visited=new HashSet<>();
+        queue.offer(new Pair(0,0));
+        visited.add(new Pair(0,0));
+        //方向数组，方便访问相邻节点
+        int[][] directions={{-1,-1},{-1,0},{-1,1},{0,-1},{0,1},{1,-1},{1,0},{1,1}};
+        int step=0;
+        while (!queue.isEmpty()){
+            int sz=queue.size();
+            for (int i=0;i<sz;i++){
+                Pair node= queue.poll();
+                int row=node.get(0);
+                int col=node.get(1);
+                if(row== grid.length-1&&col==grid[0].length-1)
+                    return step;
+                for(int[] dire:directions){
+                    //越界判断
+                    if(row+dire[0]<0||row+dire[0]==grid.length||col+dire[1]<0||col+dire[1]==grid[0].length)
+                        continue;
+                    //可行性判断
+                    if (grid[row+dire[0]][col+dire[1]]==1)
+                        continue;
+                    Pair adj=new Pair(row+dire[0],col+dire[1]);
+                    if(!visited.contains(adj)){
+                        queue.offer(adj);
+                        visited.add(adj);
+                    }
+                }
+            }
+            step++;
+        }
+        return step;
     }
 }

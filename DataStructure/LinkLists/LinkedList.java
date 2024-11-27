@@ -1,32 +1,6 @@
 package LinkLists;
 
 
-
-/**
- * 链表节点类
- */
-class ListNode<E>{
-    E e;
-    ListNode next;
-    ListNode(E x){
-        e = x;
-    }
-    ListNode(E x, ListNode n){
-        this.e =x;
-        this.next=n;
-    }
-    ListNode(){
-        this.next=null;
-        this.e=null;
-    }
-
-    @Override
-    public String toString(){
-        return e.toString();
-    }
-
-}
-
 /**
  *
  * @param <E>

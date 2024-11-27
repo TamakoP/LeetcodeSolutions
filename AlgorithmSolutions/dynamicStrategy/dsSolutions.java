@@ -226,4 +226,108 @@ public class dsSolutions {
         return Math.max(up, down);
     }
 
+    public boolean canPartition(int[] nums) {
+        int sum= Arrays.stream(nums).sum();
+        if(sum%2!=0) return false;
+        int W=sum/2;
+        boolean[] dp=new boolean[W+1];
+        dp[0]=true;
+        for(int num:nums){
+            for(int i=W;i>=num;i--){
+                dp[i] = dp[i] || dp[i - num];
+                // nums={1,5,11,5}
+                // 遍历 1 时：背包为空，无法满足W=2,3,...的情况，dp[i]为false,dp[1]=true;
+                // 遍历 5 时：背包有1，只满足W=6的情况,dp[6]=true;
+                // 遍历11时：背包有1和5,dp[11]||dp[0]=true,dp[11]=true;
+
+            }
+        }
+        return dp[W];
+    }
+
+   // https://mp.weixin.qq.com/s/lQEj_K1lUY83QtIzqTikGA 股票问题全解
+   public int maxProfit_2(int[] prices) {
+        int[][][] dp=new int[prices.length][3][2];
+        for(int i=0;i<prices.length;i++){
+            for(int k=2;k>=1;k--){
+                dp[i][k][0]=Math.max(dp[i-1][k][1]+prices[i],dp[i-1][k][0]);
+                dp[i][k][1]=Math.max(dp[i-1][k-1][0]-prices[i],dp[i-1][k][1]);
+            }
+        }
+        return dp[prices.length-1][2][0];
+
+
+   }
+    /**
+     * @Description  删除两个字符串的字符使它们相等
+     * @Param [word1, word2]
+     * @return int
+     */
+    public int minDistance(String word1, String word2) {
+        int m = word1.length(), n = word2.length();
+        int[][] dp = new int[m + 1][n + 1];
+        for (int i = 1; i <= m; i++) {
+            for (int j = 1; j <= n; j++) {
+                if (word1.charAt(i - 1) == word2.charAt(j - 1)) {
+                    dp[i][j] = dp[i - 1][j - 1] + 1;
+                } else {
+                    dp[i][j] = Math.max(dp[i][j - 1], dp[i - 1][j]);
+                }
+            }
+        }
+        return m + n - 2 * dp[m][n];
+    }
+
+    public int[] test(int[] temperatures){
+        int[] answers=new int[temperatures.length];
+        /*for(int i=0;i<temperatures.length;i++){
+            if(i==temperatures.length-1)
+                break;
+            for(int j=i+1;j<temperatures.length;j++){
+                if(temperatures[j]>temperatures[i]){
+                    answers[i]=j-i;
+                    break;
+                }
+            }
+        }*/
+        for(int i=0;i<temperatures.length;i++){
+            int j=i+1;
+            if(temperatures[j]>temperatures[i]){
+                answers[i]=j-1;
+            }else{
+                j++;
+
+            }
+        }
+        return  answers;
+    }
+
+    public int minDistance2(String word1, String word2) {
+        if (word1 == null || word2 == null) {
+            return 0;
+        }
+        int m = word1.length(), n = word2.length();
+        int[][] dp = new int[m + 1][n + 1];
+        // base case是一个字符串遍历结束，但另一个还在进行，这时要么增要么删：例如dp[-1][j]是指s1遍历完了，但s2还有s2.length-j+1个字符未遍历
+        // 这时需要进行增操作s2.length-j+1次
+        // 数组索引至少是 0，所以 dp 数组会偏移一位，dp[..][0]和dp[0][..]对应 base case
+        for (int i = 1; i <= m; i++) {
+            dp[i][0] = 0;
+        }
+        for (int i = 1; i <= n; i++) {
+            dp[0][i] = 0;
+        }
+        for (int i = 1; i <= m; i++) {
+            for (int j = 1; j <= n; j++) {
+                if (word1.charAt(i - 1) == word2.charAt(j - 1)) {
+                    dp[i][j] = dp[i - 1][j - 1];
+                } else {
+                    dp[i][j] = Math.min(dp[i - 1][j - 1], Math.min(dp[i][j - 1], dp[i - 1][j])) + 1;
+                }
+            }
+        }
+        return dp[m][n];
+    }
+
+
 }
