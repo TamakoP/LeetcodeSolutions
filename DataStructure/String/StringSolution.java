@@ -8,6 +8,7 @@ import java.util.HashMap;
  * @Date: 2024/8/13 下午3:29
  * @Version: 1.0
  */
+// 字符串题解：（1）从中间或者中部某位置开始往两边走或者一分为二；（2）翻转再翻转； （3）回文的一大特性：两边对称即左半部分翻转=右半部分
 public class StringSolution {
     /**
      * @Description 字符串循环移位包含
@@ -77,7 +78,9 @@ public class StringSolution {
      * @Param [s]
      * @return int
      */
+    //时间复杂度o(n^3)
     public int countSubstrings(String s){
+        //单个字符也算
         int cnt=s.length();
         for(int i=0;i<s.length();i++){
             //不断朝着字符串尾扩充
@@ -97,5 +100,62 @@ public class StringSolution {
             }
         }
         return cnt;
+    }
+    private int cnt = 0;
+
+    public int countSubstrings1(String s) {
+        for (int i = 0; i < s.length(); i++) {
+            //遍历字符串，每个字符作为回文串的中心向两端扩展，扩展结果要么偶数长度要么奇数长度
+            extendSubstrings(s, i, i);     // 奇数长度
+            extendSubstrings(s, i, i + 1); // 偶数长度
+        }
+        return cnt;
+    }
+    //extend传入的是字符串中心，奇数长度，中心只有一个，偶数长度，双中心
+    private void extendSubstrings(String s, int start, int end) {
+        while (start >= 0 && end < s.length() && s.charAt(start) == s.charAt(end)) {
+            //两边扩展，所以start--,end++
+            start--;
+            end++;
+            cnt++;
+        }
+    }
+    public boolean integerisPalidrom(int x){
+        if(x<0)
+            return false;
+        if(x<10)
+            return true;
+        int right=0;
+        while(right<x){
+            right=(x%10)+right*10;
+            x/=10;
+        }
+        //偶数长度，左右两半应该刚好相等；奇数长度,右半部分比左半部分多了一个中心数
+        return right==x||right/10==x;
+    }
+    private int total=0;
+    public int countBinarySubstrings(String s) {
+        if(s==null||s.length()<2)
+            return 0;
+        for(int i=1;i<s.length();i++){
+            if(s.charAt(i)!=s.charAt(i-1)){
+                extendInt(s,i-1,i);
+            }
+
+        }
+        return total;
+    }
+
+    private void extendInt(String s,int start,int end){
+        char left=s.charAt(start);
+        char right=s.charAt(end);
+        while(start>=0&&end<s.length()&&s.charAt(start)!=s.charAt(end)){
+            //再加一层约束:如果传过来的是01，那么往两边扩展时必须保证左边是连续的0，而右边是连续的1；反之10
+            if(s.charAt(start)==left&&s.charAt(end)==right)
+                total++;
+            start--;
+            end++;
+
+        }
     }
 }
