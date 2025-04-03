@@ -15,13 +15,16 @@ public class StringSolution {
      * @return boolean
      */
     public boolean stringShiftContain(String s1,String s2){
-        int len=s1.length();
-        for(int i=0;i<len;i++){
-            String news=s1.substring(len-i)+s1.substring(0,len-i);
-            if(news.contains(s2))
-                return true;
-        }
-        return false;
+//        int len=s1.length();
+//        for(int i=0;i<len;i++){
+//            String news=s1.substring(len-i)+s1.substring(0,len-i);
+//            if(news.contains(s2))
+//                return true;
+//        }
+//
+        //直接concat
+        String news = s1.concat(s1);
+        return news.contains(s2);
     }
     /**
      * @Description 字符串循环移位
@@ -31,7 +34,10 @@ public class StringSolution {
 
 
     public String stringShiftK(String s,int k){
+        if(k==0||k==s.length())
+            return s;
         int len=s.length();
+        k= k%len;
         String news=s.substring(len-k)+s.substring(0,len-k);
         return news;
     }

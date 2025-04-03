@@ -8,9 +8,8 @@ package String;
  */
 public class test {
     public static void main(String[] args){
-        String s1="bbccdd";
         StringSolution ss=new StringSolution();
-        System.out.println(ss.countSubstrings(s1));
+        System.out.println(ss.stringShiftK("abcd123",22));
     }
 
 }
